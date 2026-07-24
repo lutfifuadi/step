@@ -14,8 +14,9 @@
     </div>
   @endif
 
-  <div class="card shadow-sm" style="border-radius: 5px;">
-    <div class="card-header bg-white py-3 border-bottom">
+  <!-- Card Heading: Judul, deskripsi, filter, dan aksi -->
+  <div class="card shadow-sm mb-4" style="border-radius: 5px;">
+    <div class="card-body">
       <div class="d-flex flex-column gap-3">
         <div>
           <h4 class="mb-1 fw-bold text-teal-deep">Daftar Ekspresi</h4>
@@ -23,21 +24,21 @@
         </div>
         
         <!-- Form Filter Responsif -->
-        <div class="bg-light p-3 rounded">
+        <div class="bg-light p-3" style="border-radius: 5px;">
           <form action="{{ route('admin.expressions.index') }}" method="GET" class="row g-3 align-items-end">
             <!-- Search -->
             <div class="col-12 col-md-4">
               <label for="search" class="form-label fw-semibold text-teal-deep small">Kata Kunci</label>
               <div class="input-group">
-                <span class="input-group-text bg-white border-end-0"><i class="icon-base ti tabler-search text-muted"></i></span>
-                <input type="text" name="search" id="search" class="form-control border-start-0" placeholder="Cari isi curahan..." value="{{ request('search') }}">
+                <span class="input-group-text bg-white border-end-0" style="border-radius: 5px 0 0 5px;"><i class="icon-base ti tabler-search text-muted"></i></span>
+                <input type="text" name="search" id="search" class="form-control border-start-0" placeholder="Cari isi curahan..." value="{{ request('search') }}" style="border-radius: 0 5px 5px 0;">
               </div>
             </div>
 
             <!-- Kategori -->
             <div class="col-12 col-sm-6 col-md-3">
               <label for="category_id" class="form-label fw-semibold text-teal-deep small">Kategori</label>
-              <select name="category_id" id="category_id" class="form-select">
+              <select name="category_id" id="category_id" class="form-select" style="border-radius: 5px;">
                 <option value="">Semua Kategori</option>
                 @foreach($categories as $category)
                   <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
@@ -50,7 +51,7 @@
             <!-- Status -->
             <div class="col-12 col-sm-6 col-md-3">
               <label for="status" class="form-label fw-semibold text-teal-deep small">Status</label>
-              <select name="status" id="status" class="form-select">
+              <select name="status" id="status" class="form-select" style="border-radius: 5px;">
                 <option value="">Semua Status</option>
                 <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Tertunda (Pending)</option>
                 <option value="approved" {{ request('status') == 'approved' ? 'selected' : '' }}>Disetujui (Approved)</option>
@@ -60,10 +61,10 @@
 
             <!-- Buttons -->
             <div class="col-12 col-md-2 d-flex gap-2">
-              <button type="submit" class="btn text-white w-100 d-flex align-items-center justify-content-center gap-1" style="background-color: var(--teal-mid); border-color: var(--teal-mid);">
+              <button type="submit" class="btn text-white w-100 d-flex align-items-center justify-content-center gap-1" style="background-color: var(--teal-mid); border-color: var(--teal-mid); border-radius: 5px;">
                 <i class="icon-base ti tabler-filter fs-5"></i> Filter
               </button>
-              <a href="{{ route('admin.expressions.index') }}" class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center gap-1">
+              <a href="{{ route('admin.expressions.index') }}" class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center gap-1" style="border-radius: 5px;">
                 <i class="icon-base ti tabler-refresh fs-5"></i> Reset
               </a>
             </div>
@@ -71,19 +72,22 @@
         </div>
       </div>
     </div>
+  </div>
 
+  <!-- Card Tabel Utama: Tabel data dan pagination -->
+  <div class="card shadow-sm" style="border-radius: 5px;">
     <div class="card-body">
       @if($expressions->count() > 0)
         <div class="table-responsive text-nowrap">
           <table class="table table-hover align-middle">
             <thead class="table-light">
               <tr>
-                <th style="width: 80px;">ID</th>
+                <th style="width: 80px; border-top-left-radius: 5px;">ID</th>
                 <th>Kategori</th>
                 <th>Nama Tampil</th>
                 <th>Status</th>
                 <th>Tanggal</th>
-                <th class="text-center" style="width: 120px;">Tindakan</th>
+                <th class="text-center" style="width: 120px; border-top-right-radius: 5px;">Tindakan</th>
               </tr>
             </thead>
             <tbody class="table-border-bottom-0">
@@ -92,7 +96,7 @@
                   <td><span class="fw-bold text-dark">#{{ $expression->id }}</span></td>
                   <td>
                     @if($expression->category)
-                      <span class="badge bg-label-primary">{{ $expression->category->name }}</span>
+                      <span class="badge bg-label-primary" style="border-radius: 3px;">{{ $expression->category->name }}</span>
                     @else
                       <span class="text-muted">-</span>
                     @endif
@@ -102,18 +106,18 @@
                   </td>
                   <td>
                     @if($expression->status === 'approved')
-                      <span class="badge bg-label-success">Disetujui</span>
+                      <span class="badge bg-label-success" style="border-radius: 3px;">Disetujui</span>
                     @elseif($expression->status === 'flagged')
-                      <span class="badge bg-label-danger">Diflag</span>
+                      <span class="badge bg-label-danger" style="border-radius: 3px;">Diflag</span>
                     @else
-                      <span class="badge bg-label-warning">Tertunda</span>
+                      <span class="badge bg-label-warning" style="border-radius: 3px;">Tertunda</span>
                     @endif
                   </td>
                   <td>
                     <span class="small text-muted">{{ $expression->created_at->format('d M Y H:i') }}</span>
                   </td>
                   <td class="text-center">
-                    <a href="{{ route('admin.expressions.show', $expression) }}" class="btn btn-sm text-white" style="background-color: var(--teal-mid); border-color: var(--teal-mid);">
+                    <a href="{{ route('admin.expressions.show', $expression) }}" class="btn btn-sm text-white" style="background-color: var(--teal-mid); border-color: var(--teal-mid); border-radius: 5px;">
                       <i class="icon-base ti tabler-eye me-1 small"></i> Detail
                     </a>
                   </td>

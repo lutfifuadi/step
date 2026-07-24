@@ -3,24 +3,30 @@
 @section('title', 'Manajemen Kontak Konselor')
 
 @section('content')
-<div class="card shadow-sm" style="border-radius: 5px;">
-  <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-bottom" style="border-top-left-radius: 5px; border-top-right-radius: 5px;">
-    <div>
-      <h4 class="mb-0 fw-bold text-teal-deep">Daftar Kontak Konselor</h4>
-      <p class="text-muted small mb-0">Kelola informasi kontak konselor/BK sekolah yang akan ditampilkan di halaman publik secara dinamis.</p>
+  <!-- Card Heading: Judul, deskripsi, filter, dan aksi -->
+  <div class="card shadow-sm mb-4" style="border-radius: 5px;">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <h4 class="mb-1 fw-bold text-teal-deep">Daftar Kontak Konselor</h4>
+          <p class="text-muted small mb-0">Kelola informasi kontak konselor/BK sekolah yang akan ditampilkan di halaman publik secara dinamis.</p>
+        </div>
+        <a href="{{ route('admin.konselor.create') }}" class="btn d-flex align-items-center gap-2" style="background-color: var(--teal-mid); border-color: var(--teal-mid); color: white; border-radius: 5px;">
+          <i class="icon-base ti tabler-plus"></i> Tambah Konselor
+        </a>
+      </div>
     </div>
-    <a href="{{ route('admin.konselor.create') }}" class="btn d-flex align-items-center gap-2" style="background-color: var(--teal-mid); border-color: var(--teal-mid); color: white; border-radius: 5px;">
-      <i class="icon-base ti tabler-plus"></i> Tambah Konselor
-    </a>
   </div>
 
-  <div class="card-body">
-    @if(session('success'))
-      <div class="alert alert-success alert-dismissible fade show" role="alert" style="border-radius: 5px;">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-    @endif
+  <!-- Card Tabel Utama: Tabel data dan pagination -->
+  <div class="card shadow-sm" style="border-radius: 5px;">
+    <div class="card-body">
+      @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert" style="border-radius: 5px;">
+          {{ session('success') }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      @endif
 
     @if($contacts->count() > 0)
       <div class="table-responsive text-nowrap">

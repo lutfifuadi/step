@@ -18,63 +18,69 @@
 @endsection
 
 @section('content')
-<div class="card shadow-sm" style="border-radius: 5px;">
-  <div class="card-header bg-white py-3 d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 border-bottom">
-    <div>
-      <h4 class="mb-0 fw-bold text-teal-deep">CMS Konten Landing Page</h4>
-      <p class="text-muted small mb-0">Kelola dan update teks, judul, body, dan ikon di halaman beranda, tentang, edukasi, dan pencegahan secara dinamis.</p>
-    </div>
-    
-    <form action="{{ route('admin.program-contents.index') }}" method="GET" class="d-flex flex-column flex-sm-row gap-2 align-items-stretch align-items-sm-center m-0">
-      <div class="input-group input-group-merge" style="min-width: 220px;">
-        <span class="input-group-text"><i class="icon-base ti tabler-search text-muted"></i></span>
-        <input type="text" name="search" class="form-control" placeholder="Cari konten..." value="{{ request('search') }}">
+  <!-- Card Heading: Judul, deskripsi, filter, dan aksi -->
+  <div class="card shadow-sm mb-4" style="border-radius: 5px;">
+    <div class="card-body">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+        <div>
+          <h4 class="mb-1 fw-bold text-teal-deep">CMS Konten Landing Page</h4>
+          <p class="text-muted small mb-0">Kelola dan update teks, judul, body, dan ikon di halaman beranda, tentang, edukasi, dan pencegahan secara dinamis.</p>
+        </div>
+        
+        <form action="{{ route('admin.program-contents.index') }}" method="GET" class="d-flex flex-column flex-sm-row gap-2 align-items-stretch align-items-sm-center m-0">
+          <div class="input-group input-group-merge" style="min-width: 220px;">
+            <span class="input-group-text" style="border-radius: 5px 0 0 5px;"><i class="icon-base ti tabler-search text-muted"></i></span>
+            <input type="text" name="search" class="form-control" placeholder="Cari konten..." value="{{ request('search') }}" style="border-radius: 0 5px 5px 0;">
+          </div>
+
+          <select name="section" class="form-select" style="min-width: 180px; border-radius: 5px;" onchange="this.form.submit()">
+            <option value="">Semua Section</option>
+            @foreach($sections as $sec)
+              <option value="{{ $sec }}" {{ request('section') === $sec ? 'selected' : '' }}>
+                {{ ucwords(str_replace('_', ' ', $sec)) }}
+              </option>
+            @endforeach
+          </select>
+
+          @if(request('search') || request('section'))
+            <a href="{{ route('admin.program-contents.index') }}" class="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-1" style="border-radius: 5px;">
+              <i class="icon-base ti tabler-rotate-clockwise"></i> <span>Reset</span>
+            </a>
+          @endif
+        </form>
       </div>
-
-      <select name="section" class="form-select" style="min-width: 180px;" onchange="this.form.submit()">
-        <option value="">Semua Section</option>
-        @foreach($sections as $sec)
-          <option value="{{ $sec }}" {{ request('section') === $sec ? 'selected' : '' }}>
-            {{ ucwords(str_replace('_', ' ', $sec)) }}
-          </option>
-        @endforeach
-      </select>
-
-      @if(request('search') || request('section'))
-        <a href="{{ route('admin.program-contents.index') }}" class="btn btn-outline-secondary d-flex align-items-center justify-content-center gap-1">
-          <i class="icon-base ti tabler-rotate-clockwise"></i> <span>Reset</span>
-        </a>
-      @endif
-    </form>
+    </div>
   </div>
 
-  <div class="card-body">
-    @if(session('success'))
-      <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-    @endif
+  <!-- Card Tabel Utama: Tabel data dan pagination -->
+  <div class="card shadow-sm" style="border-radius: 5px;">
+    <div class="card-body">
+      @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert" style="border-radius: 5px;">
+          {{ session('success') }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      @endif
 
     @if($contents->count() > 0)
       <div class="table-responsive text-nowrap">
         <table class="table table-hover align-middle">
           <thead class="table-light">
             <tr>
-              <th>Section</th>
+              <th style="border-top-left-radius: 5px;">Section</th>
               <th>Key</th>
               <th>Title</th>
               <th>Preview Body</th>
               <th>Urutan</th>
               <th>Status</th>
-              <th class="text-center">Aksi</th>
+              <th class="text-center" style="border-top-right-radius: 5px; width: 100px;">Aksi</th>
             </tr>
           </thead>
           <tbody class="table-border-bottom-0">
             @foreach($contents as $content)
               <tr>
                 <td>
-                  <span class="badge bg-label-info fw-semibold">{{ ucwords(str_replace('_', ' ', $content->section)) }}</span>
+                  <span class="badge bg-label-info fw-semibold" style="border-radius: 3px;">{{ ucwords(str_replace('_', ' ', $content->section)) }}</span>
                 </td>
                 <td>
                   <code class="small text-muted">{{ $content->key }}</code>
@@ -98,18 +104,18 @@
                   @endif
                 </td>
                 <td>
-                  <span class="badge bg-label-secondary fw-semibold">{{ $content->sort_order }}</span>
+                  <span class="badge bg-label-secondary fw-semibold" style="border-radius: 3px;">{{ $content->sort_order }}</span>
                 </td>
                 <td>
                   @if($content->is_active)
-                    <span class="badge bg-label-success">Aktif</span>
+                    <span class="badge bg-label-success" style="border-radius: 3px;">Aktif</span>
                   @else
-                    <span class="badge bg-label-danger">Nonaktif</span>
+                    <span class="badge bg-label-danger" style="border-radius: 3px;">Nonaktif</span>
                   @endif
                 </td>
                 <td>
                   <div class="d-flex justify-content-center">
-                    <a href="{{ route('admin.program-contents.edit', $content) }}" class="btn btn-sm btn-outline-teal d-flex align-items-center gap-1" title="Edit Konten">
+                    <a href="{{ route('admin.program-contents.edit', $content) }}" class="btn btn-sm btn-outline-teal d-flex align-items-center gap-1" style="border-radius: 5px;" title="Edit Konten">
                       <i class="icon-base ti tabler-edit"></i> <span>Edit</span>
                     </a>
                   </div>
