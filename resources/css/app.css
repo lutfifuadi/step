@@ -464,3 +464,30 @@ body {
 .step-sidebar-overlay.show {
   display: block;
 }
+
+/* ─── PRD-007 Additional Styles ─── */
+.text-teal-deep {
+  color: var(--teal-deep) !important;
+}
+
+.step-audit-pre {
+  font-family: var(--bs-font-monospace);
+  font-size: 0.75rem;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  padding: 10px;
+  border-radius: var(--radius-xl, 5px);
+  max-height: 150px;
+  overflow-y: auto;
+  color: #495057;
+}
+
+.step-form-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  border-top: 1px solid rgba(0, 61, 51, 0.08);
+  padding-top: 20px;
+}
+
