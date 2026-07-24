@@ -1,0 +1,7 @@
+# Password default untuk setiap pengguna: katakunci{role}
+ADM001 - Admin Sample - admin
+OPR001 - Operator Sample - operator
+GURU001 - Guru Sample - guru
+WALI001 - Wali Kelas Sample - wali_kelas
+KEP001 - Kepala Sekolah Sample - kepala_sekolah
+PIKET001 - Piket Sample - piket

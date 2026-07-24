@@ -1,0 +1,19 @@
+Tugas baru untuk agen khusus untuk membangun sistem MANTAP – Monitoring Aktivitas::
+
+saya sudah login menggunakan admin ketika saya testing login as ke role lain, sistem tetap mengalihkan ke halaman login. 
+
+CATATAN WAJIB PENTING ! :
+
+- buatkan perintah diatas dalam bentuk instruksi antar agen dan simpan di file perintah-agent.md, tapi sebelum itu setiap skenario instruksi, hapus data nya terlebih dahulu agar konsisten.
+
+- Jangan terlebih dahulu melakukan penyesuaian kode didalam sistem, sebelum instruksi antar agen sudah dibuat dan disimpan di file perintah-agent.md
+
+- acuan agent nya ada di docs/agen_*.md
+
+- acuan untuk fitur fitur yang bisa dikembangkan dengan sampel sample nya ada di docs/full-version/*
+
+- progress pengerjaan tugas harus menampilan nama agent yang sedang menjawab, misalnya "Agen A sedang melakukan pengecekan pada sistem ...." pakai model ai manapun itu.
+
+- saya ingin ketika menjawab tugas diatas, agen terkait menyapa terlebih dahulu dengan menyebutkan nama agent yang sedang menjawab, misalnya "Halo, saya Agen A. Terkait masalah (nama masalah), saya akan melakukan pengecekan pada sistem untuk menemukan penyebabnya."
+
+- silahkan setiap agent memberikan jawaban terkait tugas tersebut sesuai dengan perannya masing-masing, saat progress nya penyesuaiannya saling koordinasi dengan menyebutkan nama agent layaknya suatu percakapan memakai bahasa indonesia.
