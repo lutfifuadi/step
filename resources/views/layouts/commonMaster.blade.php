@@ -44,29 +44,29 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-  <title>
-    @yield('title') | {{ config('variables.templateName') ? config('variables.templateName') : 'TemplateName' }}
-    - {{ config('variables.templateSuffix') ? config('variables.templateSuffix') : 'TemplateSuffix' }}
-  </title>
+  <title>@hasSection('title')@yield('title') | @endif{{ config('variables.templateName') }} - {{ config('variables.templateSuffix') }}</title>
   <meta name="description"
-    content="{{ config('variables.templateDescription') ? config('variables.templateDescription') : '' }}" />
+    content="@yield('meta_description', config('variables.templateDescription'))" />
   <meta name="keywords"
-    content="{{ config('variables.templateKeyword') ? config('variables.templateKeyword') : '' }}" />
-  <meta property="og:title" content="{{ config('variables.ogTitle') ? config('variables.ogTitle') : '' }}" />
-  <meta property="og:type" content="{{ config('variables.ogType') ? config('variables.ogType') : '' }}" />
-  <meta property="og:url" content="{{ config('variables.productPage') ? config('variables.productPage') : '' }}" />
-  <meta property="og:image" content="{{ config('variables.ogImage') ? config('variables.ogImage') : '' }}" />
+    content="@yield('meta_keywords', config('variables.templateKeyword'))" />
+  <meta property="og:title" content="@yield('og_title', config('variables.ogTitle'))" />
+  <meta property="og:type" content="@yield('og_type', config('variables.ogType'))" />
+  <meta property="og:url" content="@yield('og_url', url()->current())" />
+  <meta property="og:image" content="@yield('og_image', config('variables.ogImage'))" />
   <meta property="og:description"
-    content="{{ config('variables.templateDescription') ? config('variables.templateDescription') : '' }}" />
+    content="@yield('og_description', config('variables.templateDescription'))" />
   <meta property="og:site_name"
-    content="{{ config('variables.creatorName') ? config('variables.creatorName') : '' }}" />
-  <meta name="robots" content="noindex, nofollow" />
+    content="{{ config('variables.creatorName') }}" />
+  <meta name="robots" content="@yield('robots', 'index, follow')" />
   <!-- laravel CRUD token -->
   <meta name="csrf-token" content="{{ csrf_token() }}" />
   <!-- Canonical SEO -->
-  <link rel="canonical" href="{{ config('variables.productPage') ? config('variables.productPage') : '' }}" />
+  <link rel="canonical" href="@yield('canonical', url()->current())" />
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}" />
+
+  {{-- SEO Meta Tags Stack --}}
+  @stack('meta')
 
   <!-- Preload critical assets (pushed by child layouts) -->
   @stack('preload')

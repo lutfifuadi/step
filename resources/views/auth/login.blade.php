@@ -7,6 +7,12 @@ $customizerHidden = 'customizer-hide';
 @extends('layouts/blankLayout')
 
 @section('title', 'Login')
+@section('meta_description', 'Masuk ke akun STEP untuk melanjutkan perjalanan keterlibatan ayah dalam mendukung tumbuh kembang anak. Platform edukasi dan dukungan paternal involvement.')
+@section('meta_keywords', 'login STEP, masuk akun, paternal involvement, keterlibatan ayah, edukasi ayah')
+@section('og_title', 'Login STEP - Paternal Involvement')
+@section('og_description', 'Masuk ke akun STEP untuk melanjutkan perjalanan keterlibatan ayah dalam mendukung tumbuh kembang anak.')
+@section('og_type', 'website')
+@section('robots', 'noindex, nofollow')
 
 @section('page-style')
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
