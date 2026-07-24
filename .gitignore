@@ -50,3 +50,4 @@ yarn-error.log
 # Custom Ignore folders for GitHub
 /.agents
 /.planning
+/researcher_export_security_audit.md
