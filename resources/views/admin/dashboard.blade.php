@@ -8,7 +8,7 @@
 @endphp
 <div class="container-fluid py-2">
   <!-- Welcome Header Card -->
-  <div class="card border-0 mb-4 text-white position-relative overflow-hidden" style="background: linear-gradient(135deg, var(--teal-deep) 0%, var(--teal-mid) 100%); border-radius: 16px; box-shadow: var(--shadow-card);">
+  <div class="card border-0 mb-4 text-white position-relative overflow-hidden" style="background: linear-gradient(135deg, var(--teal-deep) 0%, var(--teal-mid) 100%); border-radius: 5px; box-shadow: var(--shadow-card);">
     <!-- Decorative Circle Blobs inside the card -->
     <div class="position-absolute" style="width: 250px; height: 250px; background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%); top: -70px; right: -50px; border-radius: 50%;"></div>
     <div class="position-absolute" style="width: 150px; height: 150px; background: radial-gradient(circle, var(--amber) 0%, transparent 70%); bottom: -40px; right: 100px; border-radius: 50%; opacity: 0.15;"></div>
@@ -17,7 +17,7 @@
       <div class="row align-items-center">
         <div class="col-lg-8">
           <span class="badge bg-warning text-dark mb-3 px-3 py-2 text-uppercase font-semibold tracking-wider" style="font-size: 0.75rem; border-radius: 30px;">Panel Admin STEP</span>
-          <h1 class="display-6 fw-bold mb-2">Selamat Datang, {{ auth()->user()->name }}!</h1>
+          <h3 class="fw-bold mb-2 text-warning">Selamat Datang, Admin STEP!</h3>
           <p class="mb-0 text-white-50" style="font-size: 0.95rem; max-width: 600px;">
             Kelola data ekspresi remaja, pantau pengaduan/konseling, serta sesuaikan informasi landing page untuk mendukung paternal involvement di Indonesia.
           </p>
@@ -94,7 +94,7 @@
   <div class="row g-4">
     <!-- Aksi Cepat Card -->
     <div class="col-lg-4">
-      <div class="card border-0 h-100" style="border-radius: 16px; box-shadow: var(--shadow-card); background-color: var(--white);">
+      <div class="card border-0 h-100" style="border-radius: 5px; box-shadow: var(--shadow-card); background-color: var(--white);">
         <div class="card-body p-4">
           <h5 class="fw-bold mb-3 text-teal-deep" style="color: var(--teal-deep);">Aksi Cepat</h5>
           <p class="text-muted small mb-4">Akses pintasan berikut untuk melakukan tugas administratif utama secara efisien.</p>
@@ -118,7 +118,7 @@
 
     <!-- Tabel Moderasi Terbaru -->
     <div class="col-lg-8">
-      <div class="card border-0 h-100" style="border-radius: 16px; box-shadow: var(--shadow-card); background-color: var(--white);">
+      <div class="card border-0 h-100" style="border-radius: 5px; box-shadow: var(--shadow-card); background-color: var(--white);">
         <div class="card-body p-4">
           <div class="d-flex align-items-center justify-content-between mb-3">
             <div>

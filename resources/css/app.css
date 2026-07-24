@@ -160,7 +160,7 @@ body {
   gap: 12px;
   padding: 12px 18px;
   margin: 2px 16px;
-  border-radius: var(--radius-xl, 8px);
+  border-radius: var(--radius-xl, 5px);
   color: rgba(255, 255, 255, 0.75);
   text-decoration: none;
   font-weight: 500;
@@ -290,7 +290,7 @@ body {
 .step-dropdown-menu {
   background-color: var(--white);
   border: 1px solid rgba(0, 61, 51, 0.08);
-  border-radius: 10px;
+  border-radius: 5px;
   box-shadow: 0 10px 30px rgba(0, 61, 51, 0.08);
   min-width: 220px;
   padding: 8px 0;
@@ -318,7 +318,7 @@ body {
 /* Stat Card */
 .step-stat-card {
   background-color: var(--white);
-  border-radius: 14px;
+  border-radius: 5px;
   padding: 24px;
   border: 1px solid rgba(0, 61, 51, 0.05);
   box-shadow: 0 8px 30px rgba(0, 61, 51, 0.04);
@@ -359,7 +359,7 @@ body {
   padding: 10px 20px;
   font-weight: 600;
   font-size: 0.875rem;
-  border-radius: 8px;
+  border-radius: 5px;
   border: 1.5px solid var(--teal-mid);
   background-color: transparent;
   color: var(--teal-mid);
@@ -387,7 +387,7 @@ body {
 .step-category-card {
   background-color: var(--white);
   border: 1px solid rgba(0, 61, 51, 0.05);
-  border-radius: 14px;
+  border-radius: 5px;
   padding: 20px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   height: 100%;

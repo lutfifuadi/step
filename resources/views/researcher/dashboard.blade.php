@@ -8,7 +8,7 @@
 @endphp
 <div class="container-fluid py-2">
   <!-- Welcome Header Peneliti -->
-  <div class="card border-0 mb-4 text-white position-relative overflow-hidden" style="background: linear-gradient(135deg, var(--teal-deep) 0%, var(--teal-mid) 100%); border-radius: 16px; box-shadow: var(--shadow-card);">
+  <div class="card border-0 mb-4 text-white position-relative overflow-hidden" style="background: linear-gradient(135deg, var(--teal-deep) 0%, var(--teal-mid) 100%); border-radius: 5px; box-shadow: var(--shadow-card);">
     <!-- Decorative Circle Blobs inside the card -->
     <div class="position-absolute" style="width: 250px; height: 250px; background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%); top: -70px; right: -50px; border-radius: 50%;"></div>
     <div class="position-absolute" style="width: 150px; height: 150px; background: radial-gradient(circle, var(--amber) 0%, transparent 70%); bottom: -40px; right: 100px; border-radius: 50%; opacity: 0.15;"></div>
@@ -17,7 +17,7 @@
       <div class="row align-items-center">
         <div class="col-lg-8">
           <span class="badge bg-info text-dark mb-3 px-3 py-2 text-uppercase font-semibold tracking-wider" style="font-size: 0.75rem; border-radius: 30px;">Data & Ekspor Peneliti</span>
-          <h1 class="display-6 fw-bold mb-2">Selamat Datang Peneliti, {{ auth()->user()->name }}!</h1>
+          <h3 class="fw-bold mb-2 text-warning">Selamat Datang Peneliti, Admin STEP!</h3>
           <p class="mb-0 text-white-50" style="font-size: 0.95rem; max-width: 650px;">
             Akses data ekspresi yang telah disetujui (dibersihkan) untuk kebutuhan riset dan analisis. Seluruh proses pengeksporan menerapkan penyamaran identitas (data masking) untuk melindungi data pribadi responden remaja secara ketat.
           </p>
@@ -47,7 +47,7 @@
   <!-- Form Ekspor Data (Teal STEP Styling) & Progress Indicator -->
   <div class="row g-4 mb-4">
     <div class="col-12">
-      <div class="card border-0" style="border-radius: 16px; box-shadow: var(--shadow-card); background-color: var(--white);">
+      <div class="card border-0" style="border-radius: 5px; box-shadow: var(--shadow-card); background-color: var(--white);">
         <div class="card-body p-4">
           <div class="d-flex align-items-start gap-2 mb-3">
             <span class="badge p-2 rounded-circle" style="background-color: rgba(0, 105, 92, 0.1); color: var(--teal-mid);">
@@ -58,12 +58,12 @@
               <p class="text-muted small mb-0">Tentukan kriteria pencarian dan ekspor ke format Excel. Proses ekspor berjalan di antrean latar belakang demi efisiensi.</p>
             </div>
           </div>
-
+ 
           <form id="exportForm" class="row g-3 align-items-end">
             @csrf
             <div class="col-md-4">
               <label class="form-label fw-semibold text-teal-deep" style="color: var(--teal-deep); font-size: 0.85rem;">Kategori</label>
-              <select name="category_id" id="exportCategory" class="form-select border-teal-soft" style="border-radius: 8px;">
+              <select name="category_id" id="exportCategory" class="form-select border-teal-soft" style="border-radius: 5px;">
                 <option value="">Semua Kategori</option>
                 @foreach($categories as $category)
                 <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -72,27 +72,27 @@
             </div>
             <div class="col-md-3">
               <label class="form-label fw-semibold text-teal-deep" style="color: var(--teal-deep); font-size: 0.85rem;">Dari Tanggal</label>
-              <input type="date" class="form-control border-teal-soft" name="from" id="exportFrom" style="border-radius: 8px;">
+              <input type="date" class="form-control border-teal-soft" name="from" id="exportFrom" style="border-radius: 5px;">
             </div>
             <div class="col-md-3">
               <label class="form-label fw-semibold text-teal-deep" style="color: var(--teal-deep); font-size: 0.85rem;">Sampai Tanggal</label>
-              <input type="date" class="form-control border-teal-soft" name="to" id="exportTo" style="border-radius: 8px;">
+              <input type="date" class="form-control border-teal-soft" name="to" id="exportTo" style="border-radius: 5px;">
             </div>
             <div class="col-md-2">
-              <button type="submit" id="btnRequestExport" class="btn text-white w-100 font-semibold" style="border-radius: 8px; background-color: var(--teal-mid); border-color: var(--teal-mid); padding: 10px 15px;">
+              <button type="submit" id="btnRequestExport" class="btn text-white w-100 font-semibold" style="border-radius: 5px; background-color: var(--teal-mid); border-color: var(--teal-mid); padding: 10px 15px;">
                 Mulai Ekspor
               </button>
             </div>
           </form>
-
+ 
           <!-- Export Progress Indicator -->
           <div id="exportProgressContainer" class="mt-4 d-none">
-            <div class="card border p-3" style="background-color: var(--cream); border-radius: 12px; border-color: var(--teal-soft) !important;">
+            <div class="card border p-3" style="background-color: var(--cream); border-radius: 5px; border-color: var(--teal-soft) !important;">
               <div class="d-flex align-items-center justify-content-between mb-2">
                 <strong id="exportStatusText" class="text-teal-deep" style="color: var(--teal-deep);">Menyiapkan ekspor...</strong>
                 <span id="exportSpinner" class="spinner-border spinner-border-sm" style="color: var(--teal-mid);" role="status"></span>
               </div>
-              <div class="progress mb-2" style="height: 10px; border-radius: 10px; background-color: rgba(0, 105, 92, 0.1);">
+              <div class="progress mb-2" style="height: 10px; border-radius: 5px; background-color: rgba(0, 105, 92, 0.1);">
                 <div id="exportProgressBar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 10%; background-color: var(--teal-mid);"></div>
               </div>
               <div class="d-flex justify-content-between align-items-center">
@@ -105,11 +105,11 @@
       </div>
     </div>
   </div>
-
+ 
   <!-- Tabel Ekspresi Disesuaikan -->
   <div class="row g-4">
     <div class="col-12">
-      <div class="card border-0" style="border-radius: 16px; box-shadow: var(--shadow-card); background-color: var(--white);">
+      <div class="card border-0" style="border-radius: 5px; box-shadow: var(--shadow-card); background-color: var(--white);">
         <div class="card-body p-4">
           <div class="d-flex align-items-center justify-content-between mb-4">
             <div>
@@ -257,7 +257,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     exportDetailsText.innerText = `Berhasil memproses ${data.row_count} baris data. File siap diunduh secara aman.`;
                     
                     exportDownloadWrapper.innerHTML = `
-                        <a href="${data.download_url}" class="btn btn-sm text-white" style="background-color: #28a745; border-color: #28a745; border-radius: 8px;" target="_blank">
+                        <a href="${data.download_url}" class="btn btn-sm text-white" style="background-color: #28a745; border-color: #28a745; border-radius: 5px;" target="_blank">
                             <i class="icon-base ti tabler-download me-1"></i> Unduh Excel
                         </a>
                     `;
