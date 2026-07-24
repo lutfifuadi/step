@@ -12,9 +12,9 @@ class RoleSeeder extends Seeder
     {
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        $admin = Role::create(['name' => 'admin']);
-        $researcher = Role::create(['name' => 'researcher']);
-        $siswa = Role::create(['name' => 'siswa']);
+        $admin = Role::firstOrCreate(['name' => 'admin']);
+        $researcher = Role::firstOrCreate(['name' => 'researcher']);
+        $siswa = Role::firstOrCreate(['name' => 'siswa']);
 
         $permissions = [
             'view expressions',
@@ -27,7 +27,7 @@ class RoleSeeder extends Seeder
         ];
 
         foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
+            Permission::firstOrCreate(['name' => $permission]);
         }
 
         $admin->givePermissionTo(Permission::all());

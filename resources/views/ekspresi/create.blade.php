@@ -167,7 +167,7 @@ $pageConfigs = ['layout' => 'front'];
             <div class="featured-expression-card h-100 d-flex flex-column justify-content-between">
               <div>
                 <span class="badge bg-{{ $item->category->color ?? 'secondary' }} mb-3" style="border-radius: 5px;">{{ $item->category->name }}</span>
-                <p class="small fst-italic text-muted mb-3" style="line-height: 1.6;">"{{ Str::limit($item->content, 100) }}"</p>
+                <p class="small fst-italic text-muted mb-3" style="line-height: 1.6;">"{{ \Illuminate\Support\Str::limit($item->content, 100) }}"</p>
               </div>
               <p class="small text-muted mb-0 fw-semibold">— {{ $item->display_name }}, {{ $item->origin ?? 'Anonim' }}</p>
             </div>

@@ -9,9 +9,18 @@ class FeaturedExpressionSeeder extends Seeder
 {
     public function run(): void
     {
+        $harapan = \App\Models\Category::where('slug', 'harapan')->first();
+        $perasaan = \App\Models\Category::where('slug', 'perasaan')->first();
+        $saran = \App\Models\Category::where('slug', 'saran')->first();
+
+        if (!$harapan || !$perasaan || !$saran) {
+            $this->command->warn('Kategori yang diperlukan belum ada. Pastikan CategorySeeder sudah dijalankan.');
+            return;
+        }
+
         $expressions = [
             [
-                'category_id' => 1,
+                'category_id' => $harapan->id,
                 'is_anonymous' => true,
                 'display_name' => 'Anonim',
                 'origin' => 'Bandung',
@@ -20,7 +29,7 @@ class FeaturedExpressionSeeder extends Seeder
                 'is_featured' => true,
             ],
             [
-                'category_id' => 3,
+                'category_id' => $perasaan->id,
                 'is_anonymous' => true,
                 'display_name' => 'Anonim',
                 'origin' => 'Bandung',
@@ -29,7 +38,7 @@ class FeaturedExpressionSeeder extends Seeder
                 'is_featured' => true,
             ],
             [
-                'category_id' => 4,
+                'category_id' => $saran->id,
                 'is_anonymous' => true,
                 'display_name' => 'Anonim',
                 'origin' => 'Bandung',
@@ -40,7 +49,9 @@ class FeaturedExpressionSeeder extends Seeder
         ];
 
         foreach ($expressions as $expression) {
-            Expression::create($expression);
+            Expression::firstOrCreate([
+                'content' => $expression['content']
+            ], $expression);
         }
     }
 }

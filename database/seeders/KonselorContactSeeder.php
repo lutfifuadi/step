@@ -12,12 +12,12 @@ class KonselorContactSeeder extends Seeder
      */
     public function run(): void
     {
-        // Seeding data awal konselor BK MAN 1 Kota Bandung
-        KonselorContact::create([
+        KonselorContact::firstOrCreate([
+            'email' => 'siti.aminah@man1bandung.sch.id'
+        ], [
             'name' => 'Dra. Hj. Siti Aminah, M.Pd.',
             'role' => 'Koordinator BK / Konselor Utama',
             'phone' => '081234567890',
-            'email' => 'siti.aminah@man1bandung.sch.id',
             'institusi' => 'MAN 1 Kota Bandung',
             'room' => 'Ruang BK Lantai 1',
             'availability' => 'Senin - Jumat, 07:00 - 15:00',
@@ -25,11 +25,12 @@ class KonselorContactSeeder extends Seeder
             'sort_order' => 1,
         ]);
 
-        KonselorContact::create([
+        KonselorContact::firstOrCreate([
+            'email' => 'budi.raharjo@man1bandung.sch.id'
+        ], [
             'name' => 'Budi Raharjo, S.Pd., Kons.',
             'role' => 'Konselor BK Kelas XII',
             'phone' => '087766554433',
-            'email' => 'budi.raharjo@man1bandung.sch.id',
             'institusi' => 'MAN 1 Kota Bandung',
             'room' => 'Ruang BK Lantai 1',
             'availability' => 'Senin - Jumat, 07:00 - 15:00',
