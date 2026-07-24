@@ -3,6 +3,7 @@
 @endisset
 @php
   $configData = Helper::appClasses();
+  $user = auth()->user();
 @endphp
 <!DOCTYPE html>
 <html lang="{{ session()->get('locale') ?? app()->getLocale() }}"
@@ -35,84 +36,253 @@
   @yield('page-style')
 </head>
 <body class="bg-light">
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg bg-white border-bottom shadow-sm px-0" style="position: sticky; top: 0; z-index: 1030;">
-    <div class="container">
-      <a href="{{ route('pages-home') }}" class="navbar-brand d-flex align-items-center gap-2 text-decoration-none">
-        <span class="fw-bold fs-5" style="color: var(--teal-deep);">STEP</span>
-        <span class="d-none d-md-inline text-muted small">Paternal Involvement</span>
-      </a>
 
-      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#stepNavbar" aria-controls="stepNavbar" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="stepNavbar">
-        <div class="navbar-nav ms-auto gap-2 align-items-center">
-          <span class="navbar-text me-2">Halo, <strong>{{ auth()->user()->name }}</strong></span>
-          <form method="POST" action="{{ route('logout') }}" class="m-0">
-            @csrf
-            <button type="submit" class="btn btn-sm btn-outline-danger fw-semibold px-3" style="border-radius:20px;">
-              Keluar
-            </button>
-          </form>
-        </div>
-      </div>
+  <div x-data="{ mobileSidebarOpen: false, userDropdownOpen: false }" class="step-dashboard-wrapper">
+    <!-- Sidebar Overlay for mobile screen -->
+    <div 
+      class="step-sidebar-overlay" 
+      :class="{ 'show active d-block': mobileSidebarOpen }" 
+      @click="mobileSidebarOpen = false"
+      style="display: none;">
     </div>
-  </nav>
 
-  <div class="container-fluid">
-    <div class="row">
-      <!-- Sidebar -->
-      <nav class="col-md-3 col-lg-2 d-md-block bg-white sidebar border-end min-vh-100 py-4 px-3 shadow-sm">
-        <div class="position-sticky">
-          <ul class="nav flex-column gap-2">
-            @if(auth()->user()->hasRole('admin'))
-              <li class="nav-item">
-                <a class="nav-link rounded p-2 fw-semibold d-flex align-items-center gap-2 {{ request()->routeIs('admin.dashboard') ? 'bg-primary text-white' : 'text-dark' }}" href="{{ route('admin.dashboard') }}">
-                  <i class="icon-base ti tabler-smart-home"></i> Dashboard
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link rounded p-2 fw-semibold d-flex align-items-center gap-2 {{ request()->routeIs('admin.expressions.*') ? 'bg-primary text-white' : 'text-dark' }}" href="{{ route('admin.expressions.index') }}">
-                  <i class="icon-base ti tabler-message"></i> Moderasi Ekspresi
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link rounded p-2 fw-semibold d-flex align-items-center gap-2 {{ request()->routeIs('admin.konselor.*') ? 'bg-primary text-white' : 'text-dark' }}" href="{{ route('admin.konselor.index') }}">
-                  <i class="icon-base ti tabler-phone-call"></i> Kontak Konselor
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link rounded p-2 fw-semibold d-flex align-items-center gap-2 {{ request()->routeIs('admin.program-contents.*') ? 'bg-primary text-white' : 'text-dark' }}" href="{{ route('admin.program-contents.index') }}">
-                  <i class="icon-base ti tabler-layout-dashboard"></i> Konten Landing Page
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link rounded p-2 fw-semibold d-flex align-items-center gap-2 {{ request()->routeIs('admin.audit-log.*') ? 'bg-primary text-white' : 'text-dark' }}" href="{{ route('admin.audit-log.index') }}">
-                  <i class="icon-base ti tabler-history"></i> Audit Log
-                </a>
-              </li>
-            @endif
+    <!-- Sidebar -->
+    <aside 
+      class="step-sidebar" 
+      :class="{ 'show active': mobileSidebarOpen }">
+      
+      <!-- Brand Logo / STEP -->
+      <div class="step-sidebar__brand">
+        <a href="{{ route('pages-home') }}" class="step-sidebar__brand-logo d-flex align-items-center gap-2">
+          <span>STEP</span>
+        </a>
+        <span class="step-sidebar__brand-text">Paternal Involvement</span>
+      </div>
 
-            @if(auth()->user()->hasRole('researcher') || auth()->user()->hasRole('admin'))
-              <li class="nav-item border-top pt-2 mt-2">
-                <span class="text-uppercase text-muted fw-bold px-2" style="font-size: 0.75rem;">Peneliti</span>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link rounded p-2 fw-semibold d-flex align-items-center gap-2 {{ request()->routeIs('researcher.dashboard') ? 'bg-primary text-white' : 'text-dark' }}" href="{{ route('researcher.dashboard') }}">
-                  <i class="icon-base ti tabler-search"></i> Riset & Ekspor
+      <!-- Menu Items -->
+      <div class="flex-grow-1 overflow-y-auto py-3">
+        <nav class="d-flex flex-column gap-1">
+          @if($user && $user->hasRole('admin'))
+            <!-- Header Section ADMIN -->
+            <div class="step-sidebar__section-header">ADMINISTRATOR</div>
+
+            <a class="step-sidebar__item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
+              <i class="icon-base ti tabler-smart-home"></i>
+              <span>Dashboard Admin</span>
+            </a>
+            
+            <a class="step-sidebar__item {{ request()->routeIs('admin.expressions.*') ? 'active' : '' }}" href="{{ route('admin.expressions.index') }}">
+              <i class="icon-base ti tabler-message-circle"></i>
+              <span>Moderasi Ekspresi</span>
+            </a>
+
+            <a class="step-sidebar__item {{ request()->routeIs('admin.konselor.*') ? 'active' : '' }}" href="{{ route('admin.konselor.index') }}">
+              <i class="icon-base ti tabler-phone-call"></i>
+              <span>Kontak Konselor</span>
+            </a>
+
+            <a class="step-sidebar__item {{ request()->routeIs('admin.program-contents.*') ? 'active' : '' }}" href="{{ route('admin.program-contents.index') }}">
+              <i class="icon-base ti tabler-layout-dashboard"></i>
+              <span>Konten Landing Page</span>
+            </a>
+
+            <a class="step-sidebar__item {{ request()->routeIs('admin.audit-log.*') ? 'active' : '' }}" href="{{ route('admin.audit-log.index') }}">
+              <i class="icon-base ti tabler-history"></i>
+              <span>Audit Log</span>
+            </a>
+
+            <!-- Divider Line & Header Section PENELITI -->
+            <div class="border-top border-white-10 my-2 mx-3"></div>
+            <div class="step-sidebar__section-header">PENELITI</div>
+
+            <a class="step-sidebar__item {{ request()->routeIs('researcher.dashboard') ? 'active' : '' }}" href="{{ route('researcher.dashboard') }}">
+              <i class="icon-base ti tabler-search"></i>
+              <span>Dashboard Peneliti</span>
+            </a>
+
+            <a class="step-sidebar__item {{ request()->routeIs('researcher.export.*') ? 'active' : '' }}" href="{{ route('researcher.dashboard') }}">
+              <i class="icon-base ti tabler-download"></i>
+              <span>Ekspor Data</span>
+            </a>
+          @elseif($user && $user->hasRole('researcher'))
+            <!-- Header Section PENELITI ONLY -->
+            <div class="step-sidebar__section-header">PENELITI</div>
+
+            <a class="step-sidebar__item {{ request()->routeIs('researcher.dashboard') ? 'active' : '' }}" href="{{ route('researcher.dashboard') }}">
+              <i class="icon-base ti tabler-search"></i>
+              <span>Dashboard Peneliti</span>
+            </a>
+
+            <a class="step-sidebar__item {{ request()->routeIs('researcher.export.*') ? 'active' : '' }}" href="{{ route('researcher.dashboard') }}">
+              <i class="icon-base ti tabler-download"></i>
+              <span>Ekspor Data</span>
+            </a>
+          @endif
+        </nav>
+      </div>
+
+      <!-- Footer Sidebar / Sign Out -->
+      <div class="step-sidebar__footer">
+        <form method="POST" action="{{ route('logout') }}" class="m-0">
+          @csrf
+          <button type="submit" class="btn btn-sm btn-outline-danger w-100 fw-semibold d-flex align-items-center justify-content-center gap-2" style="border-radius:20px;">
+            <i class="icon-base ti tabler-logout"></i>
+            <span>Keluar</span>
+          </button>
+        </form>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="step-main-content">
+      
+      <!-- Topbar / Header -->
+      <header class="step-topnav">
+        
+        <!-- Left Side: Mobile Menu Hamburger & Dynamic Breadcrumb -->
+        <div class="d-flex align-items-center gap-3">
+          <!-- Mobile Hamburger Toggle -->
+          <button 
+            type="button" 
+            class="btn p-1 d-lg-none text-dark" 
+            @click="mobileSidebarOpen = true"
+            aria-label="Buka Sidebar">
+            <i class="icon-base ti tabler-menu-2 fs-3"></i>
+          </button>
+
+          <!-- Breadcrumb Dynamic -->
+          @php
+            $breadcrumbsList = [];
+            // Buat breadcrumbs dinamis berdasarkan request route
+            if (request()->routeIs('admin.*')) {
+                $breadcrumbsList[] = ['name' => 'Admin', 'url' => route('admin.dashboard')];
+                if (request()->routeIs('admin.dashboard')) {
+                    $breadcrumbsList[] = ['name' => 'Dashboard', 'url' => null];
+                } elseif (request()->routeIs('admin.expressions.*')) {
+                    $breadcrumbsList[] = ['name' => 'Moderasi Ekspresi', 'url' => null];
+                } elseif (request()->routeIs('admin.konselor.*')) {
+                    $breadcrumbsList[] = ['name' => 'Kontak Konselor', 'url' => null];
+                } elseif (request()->routeIs('admin.program-contents.*')) {
+                    $breadcrumbsList[] = ['name' => 'Konten Landing Page', 'url' => null];
+                } elseif (request()->routeIs('admin.audit-log.*')) {
+                    $breadcrumbsList[] = ['name' => 'Audit Log', 'url' => null];
+                }
+            } elseif (request()->routeIs('researcher.*')) {
+                $breadcrumbsList[] = ['name' => 'Peneliti', 'url' => route('researcher.dashboard')];
+                if (request()->routeIs('researcher.dashboard')) {
+                    $breadcrumbsList[] = ['name' => 'Dashboard & Ekspor', 'url' => null];
+                }
+            }
+          @endphp
+          
+          <nav aria-label="breadcrumb">
+            <ul class="step-breadcrumb">
+              <li>
+                <a href="{{ route('pages-home') }}" class="d-flex align-items-center gap-1">
+                  <i class="icon-base ti tabler-home"></i>
+                  <span>Home</span>
                 </a>
               </li>
-            @endif
-          </ul>
+              @foreach($breadcrumbsList as $crumb)
+                <li>
+                  @if($crumb['url'])
+                    <a href="{{ $crumb['url'] }}">{{ $crumb['name'] }}</a>
+                  @else
+                    <span>{{ $crumb['name'] }}</span>
+                  @endif
+                </li>
+              @endforeach
+            </ul>
+          </nav>
         </div>
-      </nav>
 
-      <!-- Main Content -->
-      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4 min-vh-100">
+        <!-- Right Side: User Menu / Profile Dropdown -->
+        <div class="d-flex align-items-center gap-3">
+          <!-- Role Badge -->
+          @if($user)
+            @if($user->hasRole('admin'))
+              <span class="step-role-badge step-role-badge--admin">Admin</span>
+            @elseif($user->hasRole('researcher'))
+              <span class="step-role-badge step-role-badge--researcher">Peneliti</span>
+            @endif
+          @endif
+
+          <!-- Dropdown User -->
+          <div class="position-relative" @click.away="userDropdownOpen = false">
+            <button 
+              type="button" 
+              class="border-0 bg-transparent p-0 d-flex align-items-center gap-2 focus:outline-none"
+              @click="userDropdownOpen = !userDropdownOpen"
+              aria-expanded="false"
+              aria-haspopup="true">
+              <!-- Avatar -->
+              <div class="step-avatar">
+                @if($user && $user->name)
+                  {{ strtoupper(substr($user->name, 0, 2)) }}
+                @else
+                  U
+                @endif
+              </div>
+              <span class="d-none d-md-inline font-medium text-dark small">{{ $user ? $user->name : 'User' }}</span>
+              <i class="icon-base ti tabler-chevron-down text-muted small transition-transform duration-200" :class="{ 'rotate-180': userDropdownOpen }"></i>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div 
+              class="step-dropdown-menu position-absolute end-0" 
+              x-show="userDropdownOpen"
+              x-transition:enter="transition ease-out duration-100"
+              x-transition:enter-start="transform opacity-0 scale-95"
+              x-transition:enter-end="transform opacity-100 scale-100"
+              x-transition:leave="transition ease-in duration-75"
+              x-transition:leave-start="transform opacity-100 scale-100"
+              x-transition:leave-end="transform opacity-0 scale-95"
+              style="display: none; z-index: 1050;">
+              
+              <div class="px-4 py-2 border-bottom">
+                <span class="d-block font-semibold text-dark text-truncate" style="max-width: 180px;">{{ $user ? $user->name : 'User' }}</span>
+                <span class="d-block text-muted small text-truncate" style="max-width: 180px;">{{ $user ? $user->email : '' }}</span>
+              </div>
+
+              <a href="{{ route('pages-home') }}" class="step-dropdown-menu__item">
+                <i class="icon-base ti tabler-home"></i>
+                <span>Lihat Beranda</span>
+              </a>
+
+              @if($user && $user->hasRole('admin'))
+                <a href="{{ route('admin.dashboard') }}" class="step-dropdown-menu__item">
+                  <i class="icon-base ti tabler-dashboard"></i>
+                  <span>Dashboard Admin</span>
+                </a>
+              @endif
+
+              @if($user && ($user->hasRole('researcher') || $user->hasRole('admin')))
+                <a href="{{ route('researcher.dashboard') }}" class="step-dropdown-menu__item">
+                  <i class="icon-base ti tabler-search"></i>
+                  <span>Dashboard Peneliti</span>
+                </a>
+              @endif
+
+              <div class="dropdown-divider my-1"></div>
+
+              <form method="POST" action="{{ route('logout') }}" class="m-0">
+                @csrf
+                <button type="submit" class="step-dropdown-menu__item w-100 text-start border-0 bg-transparent text-danger">
+                  <i class="icon-base ti tabler-logout text-danger"></i>
+                  <span>Keluar</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+      </header>
+
+      <!-- Page Content Content -->
+      <main class="flex-grow-1 p-4" style="background-color: var(--cream);">
         @yield('content')
       </main>
+
     </div>
   </div>
 

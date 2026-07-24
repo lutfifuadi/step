@@ -1,116 +1,173 @@
-@php
-$pageConfigs = ['layout' => 'front'];
-@endphp
-
-@extends('layouts.layoutMaster')
+@extends('layouts.admin-layout')
 
 @section('title', 'Dashboard Peneliti')
 
 @section('content')
-<section class="container py-5">
-  <div class="row">
-    <div class="col-12 mb-4">
-      <h2>Dashboard Peneliti</h2>
-      <p class="text-muted">Data ekspresi yang telah disetujui dan filter ekspor untuk keperluan penelitian.</p>
-    </div>
-
-    <div class="col-12 mb-4">
-      <div class="row g-3">
-        @foreach($stats as $category)
-        <div class="col-md-3">
-          <div class="card p-3 shadow-sm">
-            <h6>{{ $category->name }}</h6>
-            <p class="display-6 mb-0">{{ $category->expressions_count }}</p>
-          </div>
+@php
+  use Illuminate\Support\Str;
+@endphp
+<div class="container-fluid py-2">
+  <!-- Welcome Header Peneliti -->
+  <div class="card border-0 mb-4 text-white position-relative overflow-hidden" style="background: linear-gradient(135deg, var(--teal-deep) 0%, var(--teal-mid) 100%); border-radius: 16px; box-shadow: var(--shadow-card);">
+    <!-- Decorative Circle Blobs inside the card -->
+    <div class="position-absolute" style="width: 250px; height: 250px; background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%); top: -70px; right: -50px; border-radius: 50%;"></div>
+    <div class="position-absolute" style="width: 150px; height: 150px; background: radial-gradient(circle, var(--amber) 0%, transparent 70%); bottom: -40px; right: 100px; border-radius: 50%; opacity: 0.15;"></div>
+    
+    <div class="card-body p-4 p-md-5 position-relative">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <span class="badge bg-info text-dark mb-3 px-3 py-2 text-uppercase font-semibold tracking-wider" style="font-size: 0.75rem; border-radius: 30px;">Data & Ekspor Peneliti</span>
+          <h1 class="display-6 fw-bold mb-2">Selamat Datang Peneliti, {{ auth()->user()->name }}!</h1>
+          <p class="mb-0 text-white-50" style="font-size: 0.95rem; max-width: 650px;">
+            Akses data ekspresi yang telah disetujui (dibersihkan) untuk kebutuhan riset dan analisis. Seluruh proses pengeksporan menerapkan penyamaran identitas (data masking) untuk melindungi data pribadi responden remaja secara ketat.
+          </p>
         </div>
-        @endforeach
-      </div>
-    </div>
-
-    <div class="col-12 mb-4">
-      <div class="card p-4 shadow-sm">
-        <h5>Ekspor Data Aman</h5>
-        <p class="text-sm text-muted">Menerapkan data masking secara ketat untuk melindungi responden remaja. Proses ekspor berjalan di latar belakang.</p>
-        <form id="exportForm" class="row g-3 align-items-end">
-          @csrf
-          <div class="col-md-4">
-            <label class="form-label">Kategori</label>
-            <select name="category_id" id="exportCategory" class="form-select">
-              <option value="">Semua</option>
-              @foreach($categories as $category)
-              <option value="{{ $category->id }}">{{ $category->name }}</option>
-              @endforeach
-            </select>
-          </div>
-          <div class="col-md-3">
-            <label class="form-label">Dari</label>
-            <input type="date" class="form-control" name="from" id="exportFrom">
-          </div>
-          <div class="col-md-3">
-            <label class="form-label">Sampai</label>
-            <input type="date" class="form-control" name="to" id="exportTo">
-          </div>
-          <div class="col-md-2">
-            <button type="submit" id="btnRequestExport" class="btn btn-primary w-100">Mulai Ekspor</button>
-          </div>
-        </form>
-
-        <!-- Export Progress Indicator -->
-        <div id="exportProgressContainer" class="mt-4 d-none">
-          <div class="card bg-light border p-3">
-            <div class="d-flex align-items-center justify-content-between mb-2">
-              <strong id="exportStatusText">Menyiapkan ekspor...</strong>
-              <span id="exportSpinner" class="spinner-border spinner-border-sm text-primary" role="status"></span>
-            </div>
-            <div class="progress mb-2" style="height: 10px;">
-              <div id="exportProgressBar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 10%"></div>
-            </div>
-            <div class="d-flex justify-content-between align-items-center">
-              <small id="exportDetailsText" class="text-muted">Mohon tunggu sebentar.</small>
-              <div id="exportDownloadWrapper"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-12">
-      <div class="card p-4 shadow-sm">
-        <h5>Ekspresi Terbaru</h5>
-        @if($expressions->count())
-        <div class="table-responsive">
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Kategori</th>
-                <th>Nama</th>
-                <th>Status</th>
-                <th>Tanggal</th>
-              </tr>
-            </thead>
-            <tbody>
-              @foreach($expressions as $expression)
-              <tr>
-                <td>{{ $expression->id }}</td>
-                <td>{{ $expression->category?->name ?? '-' }}</td>
-                <td>{{ $expression->display_name }}</td>
-                <td>{{ ucfirst($expression->status) }}</td>
-                <td>{{ $expression->created_at?->format('d/m/Y') }}</td>
-              </tr>
-              @endforeach
-            </tbody>
-          </table>
-        </div>
-        {{ $expressions->links() }}
-        @else
-        <div class="alert alert-secondary">Belum ada ekspresi yang disetujui.</div>
-        @endif
       </div>
     </div>
   </div>
-</section>
-</section>
+
+  <!-- Baris Card Stats Kategori (.step-category-card) -->
+  <div class="row g-4 mb-4">
+    @foreach($stats as $category)
+    <div class="col-md-3">
+      <div class="step-category-card">
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <h6 class="text-teal-deep fw-bold mb-0" style="color: var(--teal-deep); font-size: 0.9rem;">{{ $category->name }}</h6>
+          <span class="badge rounded-circle p-2" style="background-color: rgba(0, 105, 92, 0.1); color: var(--teal-mid);">
+            <i class="icon-base ti tabler-folder fs-5"></i>
+          </span>
+        </div>
+        <h3 class="fw-bold mb-1" style="color: var(--teal-deep); font-size: 1.8rem;">{{ $category->expressions_count }}</h3>
+        <span class="text-muted small">Ekspresi Disetujui</span>
+      </div>
+    </div>
+    @endforeach
+  </div>
+
+  <!-- Form Ekspor Data (Teal STEP Styling) & Progress Indicator -->
+  <div class="row g-4 mb-4">
+    <div class="col-12">
+      <div class="card border-0" style="border-radius: 16px; box-shadow: var(--shadow-card); background-color: var(--white);">
+        <div class="card-body p-4">
+          <div class="d-flex align-items-start gap-2 mb-3">
+            <span class="badge p-2 rounded-circle" style="background-color: rgba(0, 105, 92, 0.1); color: var(--teal-mid);">
+              <i class="icon-base ti tabler-download fs-4"></i>
+            </span>
+            <div>
+              <h5 class="fw-bold mb-1 text-teal-deep" style="color: var(--teal-deep);">Ekspor Data Aman (Secure Export)</h5>
+              <p class="text-muted small mb-0">Tentukan kriteria pencarian dan ekspor ke format Excel. Proses ekspor berjalan di antrean latar belakang demi efisiensi.</p>
+            </div>
+          </div>
+
+          <form id="exportForm" class="row g-3 align-items-end">
+            @csrf
+            <div class="col-md-4">
+              <label class="form-label fw-semibold text-teal-deep" style="color: var(--teal-deep); font-size: 0.85rem;">Kategori</label>
+              <select name="category_id" id="exportCategory" class="form-select border-teal-soft" style="border-radius: 8px;">
+                <option value="">Semua Kategori</option>
+                @foreach($categories as $category)
+                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label fw-semibold text-teal-deep" style="color: var(--teal-deep); font-size: 0.85rem;">Dari Tanggal</label>
+              <input type="date" class="form-control border-teal-soft" name="from" id="exportFrom" style="border-radius: 8px;">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label fw-semibold text-teal-deep" style="color: var(--teal-deep); font-size: 0.85rem;">Sampai Tanggal</label>
+              <input type="date" class="form-control border-teal-soft" name="to" id="exportTo" style="border-radius: 8px;">
+            </div>
+            <div class="col-md-2">
+              <button type="submit" id="btnRequestExport" class="btn text-white w-100 font-semibold" style="border-radius: 8px; background-color: var(--teal-mid); border-color: var(--teal-mid); padding: 10px 15px;">
+                Mulai Ekspor
+              </button>
+            </div>
+          </form>
+
+          <!-- Export Progress Indicator -->
+          <div id="exportProgressContainer" class="mt-4 d-none">
+            <div class="card border p-3" style="background-color: var(--cream); border-radius: 12px; border-color: var(--teal-soft) !important;">
+              <div class="d-flex align-items-center justify-content-between mb-2">
+                <strong id="exportStatusText" class="text-teal-deep" style="color: var(--teal-deep);">Menyiapkan ekspor...</strong>
+                <span id="exportSpinner" class="spinner-border spinner-border-sm" style="color: var(--teal-mid);" role="status"></span>
+              </div>
+              <div class="progress mb-2" style="height: 10px; border-radius: 10px; background-color: rgba(0, 105, 92, 0.1);">
+                <div id="exportProgressBar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 10%; background-color: var(--teal-mid);"></div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <small id="exportDetailsText" class="text-muted">Mohon tunggu sebentar.</small>
+                <div id="exportDownloadWrapper"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabel Ekspresi Disesuaikan -->
+  <div class="row g-4">
+    <div class="col-12">
+      <div class="card border-0" style="border-radius: 16px; box-shadow: var(--shadow-card); background-color: var(--white);">
+        <div class="card-body p-4">
+          <div class="d-flex align-items-center justify-content-between mb-4">
+            <div>
+              <h5 class="fw-bold mb-1 text-teal-deep" style="color: var(--teal-deep);">Daftar Ekspresi Disetujui</h5>
+              <p class="text-muted small mb-0">Menampilkan data ekspresi dengan nama penyamaran (masked) yang siap dianalisis.</p>
+            </div>
+          </div>
+
+          @if($expressions->count())
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead>
+                <tr class="text-muted" style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px;">
+                  <th class="ps-0">ID</th>
+                  <th>Kategori</th>
+                  <th>Nama Tampil (Masked)</th>
+                  <th>Isi Ekspresi</th>
+                  <th>Status</th>
+                  <th class="text-end pe-0">Tanggal</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach($expressions as $expression)
+                <tr>
+                  <td class="ps-0 fw-semibold text-muted">#{{ $expression->id }}</td>
+                  <td>
+                    <span class="badge bg-light text-dark border" style="border-radius: 6px;">{{ $expression->category?->name ?? '-' }}</span>
+                  </td>
+                  <td class="fw-semibold text-dark">{{ $expression->display_name }}</td>
+                  <td class="text-muted text-wrap" style="max-width: 350px;">{{ Str::limit($expression->content, 120) }}</td>
+                  <td>
+                    <span class="badge text-white" style="background-color: var(--teal-mid); border-radius: 30px; font-size: 0.75rem; padding: 4px 10px;">
+                      {{ ucfirst($expression->status) }}
+                    </span>
+                  </td>
+                  <td class="text-end pe-0 text-muted small">{{ $expression->created_at?->format('d/m/Y') }}</td>
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
+          <div class="mt-4">
+            {{ $expressions->links() }}
+          </div>
+          @else
+          <div class="text-center py-5">
+            <div class="mb-3 text-muted">
+              <i class="icon-base ti tabler-mood-empty fs-1"></i>
+            </div>
+            <h6 class="fw-bold mb-1">Belum Ada Data</h6>
+            <p class="text-muted small mb-0">Belum ada ekspresi yang berstatus disetujui saat ini.</p>
+          </div>
+          @endif
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 @push('pricing-script')
 <script>
@@ -135,7 +192,8 @@ document.addEventListener('DOMContentLoaded', function () {
         exportProgressContainer.classList.remove('d-none');
         exportStatusText.innerText = 'Membuat permintaan ekspor...';
         exportProgressBar.style.width = '15%';
-        exportProgressBar.className = 'progress-bar progress-bar-striped progress-bar-animated bg-primary';
+        exportProgressBar.className = 'progress-bar progress-bar-striped progress-bar-animated';
+        exportProgressBar.style.backgroundColor = 'var(--teal-mid)';
         exportSpinner.classList.remove('d-none');
         exportDownloadWrapper.innerHTML = '';
         exportDetailsText.innerText = 'Permintaan ekspor dikirim ke antrean sistem.';
@@ -193,13 +251,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     clearInterval(pollInterval);
                     exportStatusText.innerText = 'Ekspor Selesai!';
                     exportProgressBar.style.width = '100%';
-                    exportProgressBar.className = 'progress-bar bg-success';
+                    exportProgressBar.className = 'progress-bar';
+                    exportProgressBar.style.backgroundColor = '#28a745'; // success green
                     exportSpinner.classList.add('d-none');
                     exportDetailsText.innerText = `Berhasil memproses ${data.row_count} baris data. File siap diunduh secara aman.`;
                     
                     exportDownloadWrapper.innerHTML = `
-                        <a href="${data.download_url}" class="btn btn-sm btn-success" target="_blank">
-                            <i class="bx bx-download me-1"></i> Unduh Excel
+                        <a href="${data.download_url}" class="btn btn-sm text-white" style="background-color: #28a745; border-color: #28a745; border-radius: 8px;" target="_blank">
+                            <i class="icon-base ti tabler-download me-1"></i> Unduh Excel
                         </a>
                     `;
 
@@ -220,7 +279,8 @@ document.addEventListener('DOMContentLoaded', function () {
     function showError(message) {
         exportStatusText.innerText = 'Ekspor Gagal';
         exportProgressBar.style.width = '100%';
-        exportProgressBar.className = 'progress-bar bg-danger';
+        exportProgressBar.className = 'progress-bar';
+        exportProgressBar.style.backgroundColor = '#dc3545'; // danger red
         exportSpinner.classList.add('d-none');
         exportDetailsText.innerText = message;
         

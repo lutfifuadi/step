@@ -1,13 +1,8 @@
-@php
-$pageConfigs = ['layout' => 'front'];
-@endphp
-
-@extends('layouts.layoutMaster')
+@extends('layouts.admin-layout')
 
 @section('title', 'Daftar Ekspresi')
 
 @section('content')
-<section class="container py-5">
   <div class="row">
     <div class="col-12">
       <h2 class="mb-4">Daftar Ekspresi</h2>
@@ -42,5 +37,4 @@ $pageConfigs = ['layout' => 'front'];
       @endif
     </div>
   </div>
-</section>
 @endsection

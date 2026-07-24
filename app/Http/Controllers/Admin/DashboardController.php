@@ -18,6 +18,7 @@ class DashboardController extends Controller
             'flagged' => Expression::flagged()->count(),
             'today' => Expression::whereDate('created_at', today())->count(),
             'users' => User::count(),
+            'konselor' => \App\Models\KonselorContact::where('is_active', true)->count(),
         ];
 
         $byCategory = Category::withCount(['expressions' => function ($q) {
@@ -26,7 +27,14 @@ class DashboardController extends Controller
 
         $latestPending = Expression::pending()->with('category')->latest()->take(5)->get();
         $latestFlagged = Expression::flagged()->with('category')->latest()->take(5)->get();
+        $recentExpressions = $latestPending;
 
-        return view('admin.dashboard', compact('stats', 'byCategory', 'latestPending', 'latestFlagged'));
+        return view('admin.dashboard', compact(
+            'stats',
+            'byCategory',
+            'latestPending',
+            'latestFlagged',
+            'recentExpressions'
+        ));
     }
 }
