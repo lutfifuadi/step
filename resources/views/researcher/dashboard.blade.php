@@ -6,7 +6,7 @@
 @php
   use Illuminate\Support\Str;
 @endphp
-<div class="container-fluid py-2">
+<div>
   <!-- Welcome Header Peneliti -->
   <div class="card border-0 mb-4 text-white position-relative overflow-hidden" style="background: linear-gradient(135deg, var(--teal-deep) 0%, var(--teal-mid) 100%); border-radius: 5px; box-shadow: var(--shadow-card);">
     <!-- Decorative Circle Blobs inside the card -->
@@ -172,7 +172,6 @@
       </div>
     </div>
   </div>
-</div>
 
 @push('pricing-script')
 <script>

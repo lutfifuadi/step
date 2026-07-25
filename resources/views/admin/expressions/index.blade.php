@@ -61,11 +61,11 @@
 
             <!-- Buttons -->
             <div class="col-12 col-md-2 d-flex gap-2">
-              <button type="submit" class="btn text-white w-100 d-flex align-items-center justify-content-center gap-1" style="background-color: var(--teal-mid); border-color: var(--teal-mid); border-radius: 5px;">
-                <i class="icon-base ti tabler-filter fs-5"></i> Filter
+              <button type="submit" class="btn text-white px-3" style="background-color: var(--teal-mid); border-color: var(--teal-mid); border-radius: 5px;" title="Filter">
+                <i class="icon-base ti tabler-filter"></i>
               </button>
-              <a href="{{ route('admin.expressions.index') }}" class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center gap-1" style="border-radius: 5px;">
-                <i class="icon-base ti tabler-refresh fs-5"></i> Reset
+              <a href="{{ route('admin.expressions.index') }}" class="btn btn-outline-secondary px-3" style="border-radius: 5px;" title="Reset Filter">
+                <i class="icon-base ti tabler-refresh"></i>
               </a>
             </div>
           </form>
