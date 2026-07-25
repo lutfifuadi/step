@@ -461,6 +461,7 @@ button.step-sidebar__item:active {
     bottom: 0;
     left: -280px;
     width: 280px;
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .step-sidebar.active,
@@ -470,6 +471,10 @@ button.step-sidebar__item:active {
 
   .step-dashboard-wrapper {
     flex-direction: column;
+  }
+
+  .step-main-content {
+    width: 100%;
   }
 }
 
