@@ -6,8 +6,7 @@
 @php
   use Illuminate\Support\Str;
 @endphp
-<div class="container-fluid py-2">
-  <!-- Welcome Header Card -->
+<!-- Welcome Header Card -->
   <div class="card border-0 mb-4 text-white position-relative overflow-hidden" style="background: linear-gradient(135deg, var(--teal-deep) 0%, var(--teal-mid) 100%); border-radius: 5px; box-shadow: var(--shadow-card);">
     <!-- Decorative Circle Blobs inside the card -->
     <div class="position-absolute" style="width: 250px; height: 250px; background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%); top: -70px; right: -50px; border-radius: 50%;"></div>
