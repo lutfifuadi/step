@@ -189,6 +189,30 @@ body {
   transform: none;
 }
 
+/* Sidebar Button Item (for form buttons like Clear Cache) */
+.step-sidebar__item[type="submit"],
+button.step-sidebar__item {
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.step-sidebar__item[type="submit"]:hover,
+button.step-sidebar__item:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  transform: translateX(4px);
+}
+
+.step-sidebar__item[type="submit"]:active,
+button.step-sidebar__item:active {
+  transform: translateX(2px);
+  transition-duration: 0.1s;
+}
+
 .step-sidebar__footer {
   margin-top: auto;
   padding: 20px 24px;
