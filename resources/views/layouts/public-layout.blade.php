@@ -142,6 +142,8 @@
   </footer>
 
   @vite([
+    'resources/assets/vendor/libs/popper/popper.js',
+    'resources/assets/vendor/js/bootstrap.js',
     'resources/js/app.js'
   ])
 
