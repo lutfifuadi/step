@@ -131,7 +131,7 @@
           Menampilkan {{ $contents->firstItem() ?? 0 }} sampai {{ $contents->lastItem() ?? 0 }} dari {{ $contents->total() }} data
         </div>
         <div>
-          {{ $contents->links() }}
+          {{ $contents->links('vendor.pagination.bootstrap-5') }}
         </div>
       </div>
     @else

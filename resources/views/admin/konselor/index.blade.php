@@ -115,7 +115,7 @@
           Menampilkan {{ $contacts->firstItem() ?? 0 }} sampai {{ $contacts->lastItem() ?? 0 }} dari {{ $contacts->total() }} data
         </div>
         <div>
-          {{ $contacts->links() }}
+          {{ $contacts->links('vendor.pagination.bootstrap-5') }}
         </div>
       </div>
     @else

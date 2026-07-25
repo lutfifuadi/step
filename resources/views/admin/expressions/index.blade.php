@@ -133,7 +133,7 @@
             Menampilkan {{ $expressions->firstItem() ?? 0 }} s.d {{ $expressions->lastItem() ?? 0 }} dari {{ $expressions->total() }} data
           </div>
           <div>
-            {{ $expressions->links() }}
+            {{ $expressions->links('vendor.pagination.bootstrap-5') }}
           </div>
         </div>
       @else

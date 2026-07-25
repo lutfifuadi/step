@@ -151,8 +151,13 @@
               </tbody>
             </table>
           </div>
-          <div class="mt-4">
-            {{ $expressions->links() }}
+          <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center mt-4 gap-3">
+            <div class="text-muted small">
+              Menampilkan {{ $expressions->firstItem() ?? 0 }} s.d {{ $expressions->lastItem() ?? 0 }} dari {{ $expressions->total() }} data
+            </div>
+            <div>
+              {{ $expressions->links('vendor.pagination.bootstrap-5') }}
+            </div>
           </div>
           @else
           <div class="text-center py-5">

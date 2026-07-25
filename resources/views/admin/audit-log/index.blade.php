@@ -155,7 +155,7 @@
                 Menampilkan {{ $activities->firstItem() ?? 0 }} sampai {{ $activities->lastItem() ?? 0 }} dari {{ $activities->total() }} data
             </div>
             <div>
-                {{ $activities->links() }}
+                {{ $activities->links('vendor.pagination.bootstrap-5') }}
             </div>
         </div>
     </div>
