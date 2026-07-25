@@ -29,6 +29,7 @@
     'resources/assets/vendor/fonts/iconify/iconify.css',
     'resources/assets/vendor/libs/node-waves/node-waves.scss',
     'resources/assets/vendor/scss/core.scss',
+    'resources/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.scss',
     'resources/assets/css/demo.css',
     'resources/css/app.css'
   ])
