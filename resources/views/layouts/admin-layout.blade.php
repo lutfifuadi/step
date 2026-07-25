@@ -105,19 +105,6 @@
               <span>Ekspor Data</span>
             </a>
 
-            <!-- Divider Line & Header Section TOOLS -->
-            <div class="border-top border-white-10 my-2 mx-3"></div>
-            <div class="step-sidebar__section-header">TOOLS</div>
-
-            <form method="POST" action="{{ route('admin.clear-cache') }}" class="m-0" id="clear-cache-form-sidebar">
-              @csrf
-              <button type="submit" class="step-sidebar__item w-100 text-start border-0 bg-transparent"
-                style="cursor: pointer;"
-                onclick="return confirm('Bersihkan semua cache aplikasi? CSS dan pengaturan akan diperbarui.')">
-                <i class="icon-base ti tabler-refresh"></i>
-                <span>Clear Cache</span>
-              </button>
-            </form>
           @elseif($user && $user->hasRole('researcher'))
             <!-- Header Section PENELITI ONLY -->
             <div class="step-sidebar__section-header">PENELITI</div>

@@ -560,3 +560,25 @@ button.step-sidebar__item:active {
   vertical-align: middle;
 }
 
+/* Clear Cache Modal */
+#clearCacheModal .modal-content {
+  border: none;
+}
+
+#clearCacheModal .modal-header {
+  border-bottom: none;
+}
+
+#clearCacheModal .modal-footer {
+  border-top: 1px solid #f3f4f6;
+}
+
+#clearCacheModal .btn:focus {
+  box-shadow: none;
+}
+
+#clearCacheModal .btn:hover {
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
