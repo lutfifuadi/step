@@ -263,6 +263,17 @@
                 </a>
               @endif
 
+              @if($user && $user->hasRole('admin'))
+                <form method="POST" action="{{ route('admin.clear-cache') }}" class="m-0" id="clear-cache-form">
+                  @csrf
+                  <button type="submit" class="step-dropdown-menu__item w-100 text-start border-0 bg-transparent"
+                    onclick="return confirm('Bersihkan semua cache aplikasi? CSS dan pengaturan akan diperbarui.')">
+                    <i class="icon-base ti tabler-refresh"></i>
+                    <span>Clear Cache</span>
+                  </button>
+                </form>
+              @endif
+
               <div class="dropdown-divider my-1"></div>
 
               <form method="POST" action="{{ route('logout') }}" class="m-0">
@@ -280,6 +291,15 @@
 
       <!-- Page Content Content -->
       <main class="flex-grow-1 p-4" style="background-color: var(--cream);">
+        @if(session('success'))
+          <div class="alert alert-success alert-dismissible fade show mx-4 mt-3" role="alert" style="border-radius: 5px;">
+            <div class="d-flex align-items-center gap-2">
+              <i class="icon-base ti tabler-check-circle"></i>
+              <span>{{ session('success') }}</span>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        @endif
         @yield('content')
       </main>
 

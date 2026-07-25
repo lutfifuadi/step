@@ -45,6 +45,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:sanctum', config('jets
     // CMS Halaman Beranda / Landing Pages
     Route::resource('program-contents', \App\Http\Controllers\Admin\ProgramContentController::class)->only(['index', 'edit', 'update']);
     Route::get('audit-log', [\App\Http\Controllers\Admin\AuditLogController::class, 'index'])->name('audit-log.index');
+    Route::post('/clear-cache', [\App\Http\Controllers\Admin\CacheController::class, 'clear'])->name('clear-cache');
 });
 
 Route::prefix('researcher')->name('researcher.')->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified', 'role_or_permission:researcher|admin'])->group(function () {
